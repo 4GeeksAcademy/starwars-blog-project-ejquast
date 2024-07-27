@@ -2,7 +2,3 @@
     display: flex;
     overflow-x: auto; /* To allow the cards to auto scroll */
 }
-
-.heart-black {
-    background-color: black; /* Set the heart icon color to black */
-  }
