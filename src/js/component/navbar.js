@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useFavorites } from "../component/FavoritesContext";
 
 export const Navbar = () => {
-  const { favorites } = useFavorites();
+
 
   return (
     <nav className="navbar navbar-light bg-light mb-3">
@@ -23,20 +22,12 @@ export const Navbar = () => {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Favorites <span className="badge bg-secondary">{favorites.length}</span>
+            Favorites <span className="badge bg-secondary"></span>
           </button>
           <ul className="dropdown-menu">
-            {favorites.length > 0 ? (
-              favorites.map((item, index) => (
-                <li key={index}>
-                  <Link to={`/details/${item}`} className="dropdown-item">{item}</Link>
-                </li>
-              ))
-            ) : (
               <li>
-                <span className="dropdown-item">No favorites selected</span>
+                <span className="dropdown-item">empty</span>
               </li>
-            )}
           </ul>
         </div>
       </div>
@@ -44,3 +35,4 @@ export const Navbar = () => {
   );
 };
 
+export default Navbar;
