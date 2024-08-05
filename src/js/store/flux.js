@@ -8,12 +8,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			getPlanets: () => {
-				fetch("https://www.swapi.tech/api/planets?page=2&limit=10")
-				.then(response => response.json())
-				.then(data => setStore({planets:data.results}))
-				.catch(error => console.error("Error fetching planets:", error));
-			},
+			getPlanets: async () => {
+                try {
+                    const response = await fetch("https://www.swapi.tech/api/planets?page=2&limit=10");
+                    const data = await response.json();
+                    
+                    const planetsWithDetails = await Promise.all(
+                        data.results.map(async (planet) => {
+                            const planetResponse = await fetch(planet.url);
+                            const planetData = await planetResponse.json();
+                            const properties = planetData.result.properties;
+                            return {
+                                ...planet,
+                                ...properties
+                            };
+                        })
+                    );
+                    setStore({ planets: planetsWithDetails });
+                } catch (error) {
+                    console.error("Error fetching planets:", error);
+                }
+            },
 
 			getCharacters: async () => {
                 try {
@@ -42,49 +57,51 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-			getStarships: () => {
-				fetch("https://www.swapi.tech/api/starships?page=2&limit=10")
-				.then(response => response.json())
-				.then(data => setStore({starships:data.results}))
-				.catch(error => console.error("Error fetching starships:", error));
-			},
+			getStarships: async () => {
+                try {
+                    const response = await fetch("https://www.swapi.tech/api/starships?page=2&limit=10");
+                    const data = await response.json();
+                    
+                    const starshipsWithDetails = await Promise.all(
+                        data.results.map(async (starship) => {
+                            const starshipResponse = await fetch(starship.url);
+                            const starshipData = await starshipResponse.json();
+                            const properties = starshipData.result.properties;
+                            return {
+                                ...starship,
+                                ...properties
+                            };
+                        })
+                    );
+                    setStore({ starships: starshipsWithDetails });
+                } catch (error) {
+                    console.error("Error fetching starships:", error);
+                }
+            },
 			
-			setFavorite: (category, id) => {
-				// add liked item to favorites array
-				if(category == "people"){
-					for(let person of getStore().people) {
-						if(id == person._id){
-							setStore({
-								favorites: [...getStore().favorites, person.properties.name]
-							}) 
-						} 
-					}
-				}
-				else if(category == "planet"){
-					for(let planet of getStore().planets) {
-						if(id == planet._id){
-							setStore({
-								favorites: [...getStore().favorites, planet.properties.name]
-							}) 
-						}
-					}
-				}
-				else if(category == "vehicle"){
-					for(let vehicle of getStore().vehicles) {
-						if(id == vehicle._id){
-							setStore({
-								favorites: [...getStore().favorites, vehicle.properties.name]
-							}) 
-						}
-					} 
-				} 
-			},
+			setFavorite: (category, uid) => {
+                // add liked item to favorites array
+                const store = getStore();
+                let item;
+                if (category === "people") {
+                    item = store.people.find(p => p.uid === uid);
+                } else if (category === "planets") {
+                    item = store.planets.find(p => p.uid === uid);
+                } else if (category === "starships") {
+                    item = store.starships.find(s => s.uid === uid);
+                }
+                if (item && !store.favorites.some(f => f.uid === uid)) {
+                    setStore({
+                        favorites: [...store.favorites, { ...item, category }]
+                    });
+                }
+            },
 
-			removeFavorite: (name) => {
-				setStore({
-					favorites: [...getStore().favorites.filter((items)=> name != items)]
-				})
-			}
+            removeFavorite: (uid) => {
+                setStore({
+                    favorites: getStore().favorites.filter(item => item.uid !== uid)
+                });
+            }
 		}
 	};
 };
