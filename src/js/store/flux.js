@@ -11,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			getPlanets: async () => {
                 try {
-                    const response = await fetch("https://www.swapi.tech/api/planets?page=2&limit=10");
+                    const response = await fetch("https://www.swapi.tech/api/planets?page=1&limit=10");
                     const data = await response.json();
                     
                     const planetsWithDetails = await Promise.all(
@@ -34,7 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getCharacters: async () => {
                 try {
                     // Fetch the list of people
-                    const response = await fetch("https://www.swapi.tech/api/people?page=2&limit=10");
+                    const response = await fetch("https://www.swapi.tech/api/people?page=1&limit=10");
                     const data = await response.json();
                     
                     // Fetch additional details for each person
@@ -60,7 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getStarships: async () => {
                 try {
-                    const response = await fetch("https://www.swapi.tech/api/starships?page=2&limit=10");
+                    const response = await fetch("https://www.swapi.tech/api/starships?page=1&limit=10");
                     const data = await response.json();
                     
                     const starshipsWithDetails = await Promise.all(

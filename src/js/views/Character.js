@@ -24,21 +24,21 @@ export const Character = () => {
                         setCharacter(fetchedCharacter);
                     }
                 })
-                .catch(error => console.error("Error fetching character:", error));
+                .catch(error => console.error("Error fetching  character:", error));
         }
     }, [uid, actions]);
 
     // Function to get the photo URL
-    // const getPhotoUrl = (uid) => `https://starwars-visualguide.com/assets/img/characters/${uid}.jpg`;
-    const getPhotoUrl = (uid) => {
-        if (!uid) {
-            console.error("No UID provided for photo URL");
-            return "https://starwars-visualguide.com/assets/img/placeholder.jpg";
-        }
-        const url = `https://starwars-visualguide.com/assets/img/characters/${uid}.jpg`;
-        console.log("Photo URL:", url); // Log URL for debugging
-        return url;
-    };
+    const getPhotoUrl = (uid) => `https://starwars-visualguide.com/assets/img/characters/${uid}.jpg`;
+    // const getPhotoUrl = (uid) => {
+    //     if (!uid) {
+    //         console.error("No UID provided for photo URL");
+    //         return "https://starwars-visualguide.com/assets/img/placeholder.jpg";
+    //     } else {
+    //     const url = `https://starwars-visualguide.com/assets/img/characters/${uid}.jpg`;
+    //     console.log("Photo URL:", url); // Log URL for debugging
+    //     return url;}
+    // };
 
     // Placeholder image URL
     const placeholderImage = "https://starwars-visualguide.com/assets/img/placeholder.jpg";
@@ -47,9 +47,9 @@ export const Character = () => {
         <div className="mt-3 container">
         {character ? (
             <div className="row">
-                <div key={character.uid} className="col">
+                <div key={character.uid} className="col d-flex">
                     <img 
-                                src={getPhotoUrl(character.uid)} 
+                                src={getPhotoUrl(uid)}
                                 className="card-img-top"
                                 alt={character.name} 
                                 onError={(e) => e.target.src = placeholderImage} // Set placeholder on error

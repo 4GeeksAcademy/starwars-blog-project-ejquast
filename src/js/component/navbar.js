@@ -27,7 +27,7 @@ export const Navbar = () => {
             {store.favorites && store.favorites.length > 0 ? (
               store.favorites.map((favorite) => (
                 <li key={favorite.uid} className="dropdown-item d-flex justify-content-between align-items-center">
-                  {favorite.name}
+                  <Link to={`/character/${favorite.uid}`} className=""> {favorite.name}</Link>
                   <i className="fas fa-trash-alt ms-2" onClick={() => handleClick(favorite.uid)} style={{ cursor: 'pointer' }}></i>
                 </li>
               ))
