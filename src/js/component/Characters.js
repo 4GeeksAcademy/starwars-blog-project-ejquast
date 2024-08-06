@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import rigoImage from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
+import { Character } from "../views/Character";
 
 export const Characters = () => {
     const { store, actions } = useContext(Context);
@@ -59,7 +60,7 @@ export const Characters = () => {
                     <p className="card-text mb-0">Hair Color: {person.hair_color}</p>
                     <p className="card-text">Eye Color: {person.eye_color}</p>
                     <div className="d-flex justify-content-between">
-                        <Link to="#" className="btn btn-outline-primary">Learn more!</Link>
+                        <Link to={`/character/${person.uid}`} className="btn btn-outline-primary">Learn more!</Link>
 						<button className="btn btn-outline-warning" onClick={() => toggleHeart(person.uid)}>
 							<i className={hearts[person.uid] ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
 						</button>
