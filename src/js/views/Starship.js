@@ -4,39 +4,39 @@ import { useParams, Link } from "react-router-dom";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
 
-export const Character = () => {
+export const Starship = () => {
     const {uid} = useParams();
     const { store, actions } = useContext(Context);
-    const [character, setCharacter] = useState(null);
+    const [starship, setStarship] = useState(null);
 
     useEffect(() => {
-        actions.getCharacter(uid)
-        .then((fetchedCharacter) => setCharacter(fetchedCharacter))
-        .catch(error => console.error("Error fetching character:", error));
+        actions.getStarship(uid)
+        .then((fetchedStarship) => setStarship(fetchedStarship))
+        .catch(error => console.error("Error fetching starship:", error));
     }, [uid, actions]);
 
     // Function to get the photo URL
-    const getPhotoUrl = (uid) => `https://starwars-visualguide.com/assets/img/characters/${uid}.jpg`;
+    const getPhotoUrl = (uid) => `https://starwars-visualguide.com/assets/img/starships/${uid}.jpg`;
 
     // Placeholder image URL
     const placeholderImage = "https://starwars-visualguide.com/assets/img/placeholder.jpg";
 	
 	return (
         <div className="mt-5 container">
-        {character ? (
+        {starship ? (
             <div className="row">
-                <div key={character.uid} className="col d-flex mb-3">
+                <div key={starship.uid} className="col d-flex mb-3">
                     <img 
                                 src={getPhotoUrl(uid)}
                                 className="ps-5 pe-5"
-                                alt={character.name} 
+                                alt={starship.name} 
                                 onError={(e) => e.target.src = placeholderImage} // Set placeholder on error
                                 style={{maxWidth: "500px",width: "500px"}}
                             />
                 <div className="col d-flex mb-3">
-                    <div className="text-center pe-5">
-                        <h5>{character.name}</h5>
-                        <p>{character.description}</p>
+                    <div className="text-center me-5">
+                        <h5>{starship.name}</h5>
+                        <p>{starship.description}</p>
                         <p>Enim proident esse dolore ullamco ipsum. Commodo incididunt mollit ex occaecat deserunt irure est ex anim et consequat. Voluptate esse id adipisicing dolore anim et in. Eiusmod laboris quis nostrud consectetur incididunt nostrud sit id cillum adipisicing.
                             Enim proident esse dolore ullamco ipsum. Commodo incididunt mollit ex occaecat deserunt irure est ex anim et consequat. Voluptate esse id adipisicing dolore anim et in. Eiusmod laboris quis nostrud consectetur incididunt nostrud sit id cillum adipisicing.</p>
                     </div>
@@ -44,28 +44,28 @@ export const Character = () => {
             </div>
             <div className="row mt-5 mb-4 text-center border-top border-danger pt-5">
                 <div className="col">
-                    <p className="text-danger fw-bold">Birth Year:</p>
-                    <p className="text-danger">{character.birth_year}</p>
+                    <p className="text-danger fw-bold">Model:</p>
+                    <p className="text-danger">{starship.model}</p>
                 </div>
                 <div className="col">
-                    <p className="text-danger fw-bold">Gender:</p>
-                    <p className="text-danger">{character.gender}</p>
+                    <p className="text-danger fw-bold">Class:</p>
+                    <p className="text-danger">{starship.starship_class}</p>
                 </div>
                 <div className="col">
-                    <p className="text-danger fw-bold">Height:</p>
-                    <p className="text-danger">{character.height}</p>
+                    <p className="text-danger fw-bold">Speed:</p>
+                    <p className="text-danger">{starship.max_atmosphering_speed}</p>
                 </div>
                 <div className="col">
-                    <p className="text-danger fw-bold">Skin Color:</p>
-                    <p className="text-danger">{character.skin_color}</p>
+                    <p className="text-danger fw-bold">Manufacturer:</p>
+                    <p className="text-danger">{starship.manufacturer}</p>
                 </div>
                 <div className="col">
-                    <p className="text-danger fw-bold">Hair Color:</p>
-                    <p className="text-danger">{character.hair_color}</p>
+                    <p className="text-danger fw-bold">Length:</p>
+                    <p className="text-danger">{starship.length}</p>
                 </div>
                 <div className="col">
-                    <p className="text-danger fw-bold">Eye Color:</p>
-                    <p className="text-danger">{character.eye_color}</p>
+                    <p className="text-danger fw-bold">Passengers:</p>
+                    <p className="text-danger">{starship.passengers}</p>
                 </div>
             </div>
             <div className="row">
@@ -75,7 +75,7 @@ export const Character = () => {
             </div>
             </div>
         ) : (
-        <p>Loading character...</p>
+        <p>Loading starship...</p>
         )}
         </div>
 	);

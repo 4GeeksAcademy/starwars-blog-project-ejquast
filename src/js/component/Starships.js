@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import rigoImage from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
+import { Starship } from "../views/Starship";
 
 export const Starships = () => {
     const { store, actions } = useContext(Context);
@@ -59,7 +60,7 @@ export const Starships = () => {
                     <p className="card-text mb-0">Class: {starship.starship_class}</p>
                     <p className="card-text">Speed: {starship.max_atmosphering_speed}</p>
                     <div className="d-flex justify-content-between">
-                        <Link to="#" className="btn btn-outline-primary">Learn more!</Link>
+                        <Link to={`/starship/${starship.uid}`} className="btn btn-outline-primary">Learn more!</Link>
 						<button className="btn btn-outline-warning" onClick={() => toggleHeart(starship.uid)}>
 							<i className={hearts[starship.uid] ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
 						</button>
@@ -68,7 +69,7 @@ export const Starships = () => {
             </div>
         ))
         ) : (
-        <p>Loading characters...</p>
+        <p>Loading starships...</p>
         )}
         </div>
 	);

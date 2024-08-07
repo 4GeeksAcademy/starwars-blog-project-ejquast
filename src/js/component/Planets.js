@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import rigoImage from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
+import { Planet } from "../views/Planet";
 
 export const Planets = () => {
     const { store, actions } = useContext(Context);
@@ -58,7 +59,7 @@ export const Planets = () => {
 					<p className="card-text mb-0">Population: {planet.population}</p>
 					<p className="card-text">Terrain: {planet.terrain}</p>
 					<div className="d-flex justify-content-between">
-						<Link to="#" className="btn btn-outline-primary">Learn more!</Link>
+						<Link to={`/planet/${planet.uid}`} className="btn btn-outline-primary">Learn more!</Link>
 						<button className="btn btn-outline-warning" onClick={() => toggleHeart(planet.uid)}>
 							<i className={hearts[planet.uid] ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
 						</button>
@@ -67,7 +68,7 @@ export const Planets = () => {
 			</div>
 		))
 		) : (
-		<p>Loading characters...</p>
+		<p>Loading planets...</p>
 		)}
 		</div>
 	);

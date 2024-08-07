@@ -5,7 +5,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			planets: [],
 			people: [],
 			starships: [],
-            person: {}
+            person: {},
+            planet: {},
+            starship: {}
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -109,20 +111,51 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const response = await fetch(`https://www.swapi.tech/api/people/${uid}`);
                     if (!response.ok) {
                         if (response.status === 429) {
-                            console.error("Rate limit exceeded.");
                             return null;
                         }
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
             
                     const data = await response.json();
-                    console.log("Fetched character data:", data.result.properties); // Debugging line
-            
                     return data.result.properties;
                 } catch (error) {
                     console.error("Error fetching character:", error);
                 }
             },
+
+            getPlanet: async (uid) => {
+                try {
+                    const response = await fetch(`https://www.swapi.tech/api/planets/${uid}`);
+                    if (!response.ok) {
+                        if (response.status === 429) {
+                            return null;
+                        }
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    return data.result.properties;
+                } catch (error) {
+                    console.error("Error fetching planet:", error);
+                }
+            },
+
+            getStarship: async (uid) => {
+                try {
+                    const response = await fetch(`https://www.swapi.tech/api/starships/${uid}`);
+                    if (!response.ok) {
+                        if (response.status === 429) {
+                            return null;
+                        }
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    return data.result.properties;
+                } catch (error) {
+                    console.error("Error fetching starship:", error);
+                }
+            }
 		}
 	};
 };
