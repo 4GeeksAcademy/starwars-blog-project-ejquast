@@ -1,13 +1,11 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
     const handleClick = (uid) => {
         actions.removeFavorite(uid);
     }
-
   return (
     <nav className="navbar navbar-light bg-light fixed-top mb-3">
       <Link to="/" className="navbar-brand ms-5">
@@ -27,7 +25,21 @@ export const Navbar = () => {
             {store.favorites && store.favorites.length > 0 ? (
               store.favorites.map((favorite) => (
                 <li key={favorite.uid} className="dropdown-item d-flex justify-content-between align-items-center">
-                  <Link to={`/${favorite.category}/${favorite.uid}`}>{favorite.name}</Link>
+                  {favorite.category === "people" && (
+                  <Link to={`/character/${favorite.uid}`}>
+                    {favorite.name}
+                  </Link>
+                )}
+                {favorite.category === "starships" && (
+                  <Link to={`/starship/${favorite.uid}`}>
+                    {favorite.name}
+                  </Link>
+                )}
+                {favorite.category === "planets" && (
+                  <Link to={`/planet/${favorite.uid}`}>
+                    {favorite.name}
+                  </Link>
+                )}
                   <i className="fas fa-trash-alt ms-2" onClick={() => handleClick(favorite.uid)} style={{ cursor: 'pointer' }}></i>
                 </li>
               ))
@@ -40,5 +52,4 @@ export const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;
